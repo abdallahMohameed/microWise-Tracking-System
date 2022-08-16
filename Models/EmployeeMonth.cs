@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace microWise_Tracking_System.Models
 {
@@ -8,7 +9,9 @@ namespace microWise_Tracking_System.Models
         public int monthId { get; set; }
         [ForeignKey("employee")]
         public int employeeId { get; set; }
+        [Required]
         public double adherenceRate { get; set; }
+        [Required]
         public string Action { get; set; }
         public string Notes { get; set; }
 

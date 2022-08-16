@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace microWise_Tracking_System.Models
 {
@@ -6,10 +7,10 @@ namespace microWise_Tracking_System.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
-        public DateOnly date { get; set; }= DateOnly.FromDateTime(DateTime.Now);
+        public string? date { get; set; } = DateTime.Now.ToString("yyyy MMMM");
+
         public int BusinessDays { get; set; }
 
-        [NotMapped]
         public int daysInMonth { get; set; }
 
 

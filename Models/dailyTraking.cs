@@ -5,7 +5,7 @@ namespace microWise_Tracking_System.Models
 {
     public class dailyTraking
     {
-        public DateOnly date { get; set; }= DateOnly.FromDateTime(DateTime.Now);
+        public string? date { get; set; }= DateTime.Now.ToString("yyyy MMMM");
 
         [ForeignKey("employee")]
 

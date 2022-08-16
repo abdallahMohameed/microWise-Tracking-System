@@ -3,7 +3,14 @@
 namespace microWise_Tracking_System.Models
 {
     public class MicroWiseDbContext:DbContext
+
     {
+        private IConfiguration _configuration;
+
+        public MicroWiseDbContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<EmployeeMonth> EmployeesMonth { get; set; }
@@ -32,6 +39,7 @@ namespace microWise_Tracking_System.Models
             modelBuilder.Entity<Team>(a =>
             {
                 a.HasKey(a=>a.Id);
+
             });
 
 
@@ -49,10 +57,26 @@ namespace microWise_Tracking_System.Models
             modelBuilder.Entity<Month>(a =>
             {
                 a.HasKey(a => new {a.id});
+                a.HasAlternateKey(a => a.date);
+                a.Ignore(a => a.daysInMonth);
 
             });
+
+
+
+         
             base.OnModelCreating(modelBuilder);
         }
+
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("con"));
+            base.OnConfiguring(optionsBuilder);
+
+        }
+
+
 
 
     }
