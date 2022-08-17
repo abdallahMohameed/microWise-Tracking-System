@@ -24,7 +24,9 @@ namespace microWise_Tracking_System.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Month>>> Getmonths()
         {
-             return await _context.months.ToListAsync();
+           return await _context.months.ToListAsync();
+
+
         }
 
 

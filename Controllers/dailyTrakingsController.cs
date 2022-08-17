@@ -77,6 +77,8 @@ namespace microWise_Tracking_System.Controllers
                 try
                 {
                     await _context.SaveChangesAsync();
+                    UpdateAdhirance(dailyTraking);
+
                 }
                 catch (DbUpdateException)
                 {
@@ -119,6 +121,47 @@ namespace microWise_Tracking_System.Controllers
         private bool dailyTrakingExists(int id)
         {
             return (_context.DailyTraking?.Any(e => e.employeeID == id)).GetValueOrDefault();
+        }
+       
+        public async Task UpdateAdhirance(dailyTraking dailyTraking)
+        {
+           
+            string[] dateSplited = dailyTraking.date.Split(' ');
+            //get month 
+            Month? month = _context.months.Where(a => a.date == $"{dateSplited[1]} {dateSplited[2]}").FirstOrDefault();
+
+            //update adherance
+            EmployeeMonth? employeeMonth = _context.EmployeesMonth.Where(a => a.monthId == month.id && a.employeeId == dailyTraking.employeeID).FirstOrDefault();
+            if (employeeMonth == null)
+            {
+                employeeMonth=new EmployeeMonth() { monthId= (int)month.id,employeeId=dailyTraking.employeeID,Action="",adherenceRate=0};
+                _context.EmployeesMonth.Add(employeeMonth);
+            }
+            //get count of presence days
+            double PresentDays = _context.DailyTraking.Where(x => x.date.Contains(dateSplited[1]) && x.date.Contains(dateSplited[2]) && x.status.Contains("Present") && x.employeeID==dailyTraking.employeeID).Count();
+            if(PresentDays > 0)
+            {
+            employeeMonth.adherenceRate =Math.Round((100*( PresentDays/ month.BusinessDays)),2);
+
+            }
+            else { employeeMonth.adherenceRate = 0; }
+            if (employeeMonth.adherenceRate >= 95)
+            {
+                employeeMonth.Action = "Great";
+            }
+            else if(employeeMonth.adherenceRate >= 85 && employeeMonth.adherenceRate < 95)
+            {
+                employeeMonth.Action = "Warning";
+            }
+            else if (employeeMonth.adherenceRate < 85 )
+            {
+                employeeMonth.Action = "Action Plan";
+            }
+
+
+            await _context.SaveChangesAsync();
+
+
         }
     }
 }

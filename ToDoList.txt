@@ -17,3 +17,13 @@
 10-modifiy All Updte APIs in All Controllers
 
 11- created at action ==>remove
+
+
+
+
+
+
+
+            int PresentDays = _context.DailyTraking.Where(x => x.date.Contains("2022") && x.date.Contains("August") && x.status.Contains("Present")).Count();
+
+            return Ok(customers);
