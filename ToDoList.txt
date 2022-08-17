@@ -6,8 +6,6 @@
 
 3-Get Daily Traking Per Employee///update daily traking//delete daily traking
 
-6-adherance rate calculation
-
 7-Errors Mo7tarma
 
 8-daily latness Minutes

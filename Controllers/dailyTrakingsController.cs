@@ -123,7 +123,7 @@ namespace microWise_Tracking_System.Controllers
             return (_context.DailyTraking?.Any(e => e.employeeID == id)).GetValueOrDefault();
         }
        
-        public async Task UpdateAdhirance(dailyTraking dailyTraking)
+        private async Task UpdateAdhirance(dailyTraking dailyTraking)
         {
            
             string[] dateSplited = dailyTraking.date.Split(' ');
