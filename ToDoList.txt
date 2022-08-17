@@ -6,10 +6,6 @@
 
 3-Get Daily Traking Per Employee///update daily traking//delete daily traking
 
-4- prevent creating existing month
-
-5-Create new Month Constraints ? if exists // date format
-
 6-adherance rate calculation
 
 7-Errors Mo7tarma
@@ -17,3 +13,7 @@
 8-daily latness Minutes
 
 9-monthes added by superVisor only
+
+10-modifiy All Updte APIs in All Controllers
+
+11- created at action ==>remove

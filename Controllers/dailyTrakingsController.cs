@@ -50,33 +50,50 @@ namespace microWise_Tracking_System.Controllers
             return NoContent();
         }
 
-        // POST: api/dailyTrakings
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
         [HttpPost]
         public async Task<ActionResult<dailyTraking>> PostdailyTraking(dailyTraking dailyTraking)
         {
-          if (_context.DailyTraking == null)
-          {
-              return Problem("Entity set 'MicroWiseDbContext.DailyTraking'  is null.");
-          }
-            _context.DailyTraking.Add(dailyTraking);
-            try
+            //Cheack If Employye Exists
+            Employee? employee= _context.Employees.FirstOrDefault(a=>a.Id == dailyTraking.employeeID);
+            if(employee == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (dailyTrakingExists(dailyTraking.employeeID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest("This Employee Doesn't Exists");
             }
 
-            return CreatedAtAction("GetdailyTraking", new { id = dailyTraking.employeeID }, dailyTraking);
+
+            //Cheack if Employee has record for that day
+            dailyTraking? EmployeeDailyTrackig = _context.DailyTraking.Where(a=>a.employeeID==dailyTraking.employeeID && a.date == dailyTraking.date).FirstOrDefault();
+            if(EmployeeDailyTrackig != null)
+            {
+                return Conflict("This Employee has a record for that day \n You can Update this record");
+            }
+
+
+            //Check for status
+          if (dailyTraking.status== "Present" || dailyTraking.status == "Late"|| dailyTraking.status == "Excused" || dailyTraking.status == "Casual")
+            {
+                _context.DailyTraking.Add(dailyTraking);
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    if (dailyTrakingExists(dailyTraking.employeeID))
+                    {
+                        return Conflict();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return Ok(dailyTraking);
+            }
+          return BadRequest("This Status is not Valid");
+           
         }
 
         // DELETE: api/dailyTrakings/5
