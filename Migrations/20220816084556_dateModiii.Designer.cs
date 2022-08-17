@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using microWise_Tracking_System.Models;
 
@@ -11,9 +12,10 @@ using microWise_Tracking_System.Models;
 namespace microWise_Tracking_System.Migrations
 {
     [DbContext(typeof(MicroWiseDbContext))]
-    partial class MicroWiseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220816084556_dateModiii")]
+    partial class dateModiii
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

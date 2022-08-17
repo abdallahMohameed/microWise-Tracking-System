@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace microWise_Tracking_System.Models
 {
@@ -13,9 +14,10 @@ namespace microWise_Tracking_System.Models
         public double adherenceRate { get; set; }
         [Required]
         public string Action { get; set; }
-        public string Notes { get; set; }
-
-        public Month Month { get; set; }
-        public Employee employee { get; set; }
+        public string? Notes { get; set; }
+        [JsonIgnore]
+        public Month? Month { get; set; }
+        [JsonIgnore]
+        public Employee? employee { get; set; }
     }
 }

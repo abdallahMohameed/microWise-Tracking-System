@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using microWise_Tracking_System.Models;
 
@@ -11,9 +12,10 @@ using microWise_Tracking_System.Models;
 namespace microWise_Tracking_System.Migrations
 {
     [DbContext(typeof(MicroWiseDbContext))]
-    partial class MicroWiseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220816070858_dateModi")]
+    partial class dateModi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,6 +83,7 @@ namespace microWise_Tracking_System.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("adherenceRate")
@@ -95,11 +98,11 @@ namespace microWise_Tracking_System.Migrations
 
             modelBuilder.Entity("microWise_Tracking_System.Models.Month", b =>
                 {
-                    b.Property<int?>("id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<int>("BusinessDays")
                         .HasColumnType("int");
